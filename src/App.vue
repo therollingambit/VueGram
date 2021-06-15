@@ -1,26 +1,42 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="App">
+    <Title />
+    <UploadForm />
+    <ImageGrid @selected="updateSelectedImgUrl" />
+    <Modal v-if="selectedImgUrl" :imgUrl="selectedImgUrl" @close='updateSelectedImgUrl' />
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import ImageGrid from '@/components/ImageGrid';
+import Title from '@/components/Title';
+import UploadForm from '@/components/UploadForm';
+import Modal from '@/components/Modal';
+import { ref } from '@vue/reactivity';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
+    ImageGrid,
+    Title,
+    UploadForm,
+    Modal
+  },
+  setup() {
+    const selectedImgUrl = ref(null);
+
+    const updateSelectedImgUrl = (url) => {
+      selectedImgUrl.value = url
+    }
+
+    return {
+      selectedImgUrl,
+      updateSelectedImgUrl,
+    }
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
